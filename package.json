@@ -5,9 +5,8 @@
   "scripts": {
     "nilgiriDependencyInstall": " npm i && npm install -D @playwright/test && npx playwright install",
     "local": "npx playwright test",
-    "cucumberRun": "cucumber-js test || true",
     "posttest": "ts-node generateReport.ts",
-    "automation": "npm run nilgiriDependencyInstall && npm run local && npm run cucumberRun && npm run posttest "
+    "automation": "npm run nilgiriDependencyInstall && npm run local && npm run posttest "
   },
   "dependencies": {
     "monocart": "^1.1.0",
@@ -16,8 +15,6 @@
     "nilgirihub": "*",
     "dotenv": "^16.0.3",
     "@types/node": "^20.9.2",
-    "ts-node": "^10.9.1",
-    "@cucumber/cucumber": "^10.0.1",
-    "multiple-cucumber-html-reporter": "*"
+    "ts-node": "^10.9.1"
   }
 }

@@ -1,0 +1,32 @@
+name: Playwright_Nilgiri_CI
+
+on:
+  push:
+    branches:
+      - '**'  # Triggers on all branches. Change to 'main' or 'dev' if needed
+
+jobs:
+  run-nilgiri-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # Or your required version
+
+      - name: Install dependencies
+        run: npm run nilgiriDependencyInstall
+
+      - name: Run Nilgiri Tests
+        run: npm run automation
+
+      - name: Upload Test Report
+        if: always()  # Ensures report is uploaded even if tests fail
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-nilgiri-report
+          path: ./test-results/report.html

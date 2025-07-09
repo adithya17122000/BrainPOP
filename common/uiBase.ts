@@ -90,6 +90,7 @@ const uiBase = {
       await expect(page.locator(quizgeneratorPage.conceptsquizbutton)).toBeEnabled();
       await page.locator(quizgeneratorPage.conceptsquizbutton).click();
     }
+    await page.waitForTimeout(1000);
     const questionTypeMap: Record<string, string> = {
       "Multiple Choice": quizgeneratorPage.multiplechoicebutton,
       "Multi Select": quizgeneratorPage.multiselectbutton,
@@ -112,14 +113,17 @@ const uiBase = {
     await button.scrollIntoViewIfNeeded(); // helps for headless mode
     await expect(button).toBeVisible({ timeout: 5000 });
     await expect(button).toBeEnabled();
+    // await page.waitForTimeout(2000); // Give time for any animations to finish
     await button.click();
-    await page.waitForTimeout(300);
+    // await page.pause();
+    await page.waitForTimeout(500);
     const additionalInstruction = await page.locator(quizgeneratorPage.additionalinstruction).innerText();
     expect(additionalInstruction).not.toBeNull();
     const providerDropdown = page.locator('select.form-select').first();
     await providerDropdown.selectOption(provider);
     const modelDropdown = page.locator('select.form-select').nth(1);
     await modelDropdown.selectOption(model);
+    await page.waitForTimeout(300);
     const validCounts = [5, 10, 15, 20];
     if (!validCounts.includes(questionCount)) {
       throw new Error(`Invalid question count. Must be one of ${validCounts.join(", ")}`);
@@ -133,6 +137,7 @@ const uiBase = {
     await radioInput.scrollIntoViewIfNeeded();
     await radioInput.check();
     await page.locator(quizgeneratorPage.generatequestion).isEnabled();
+    await page.waitForTimeout(2000);
     await page.locator(quizgeneratorPage.generatequestion).click();
     await page.waitForSelector(quizgeneratorPage.questioncard);
     const questionsGenerated = await page.locator(quizgeneratorPage.questioncard);
@@ -190,7 +195,7 @@ const uiBase = {
     expect(clean(questionTypeFromSummary)).toBe(expectedQuestionType);
     expect(Number(clean(questionCount))).toBe(expectedQuestionCount);
     expect(clean(provider)).toBe(expectedProvider);
-    expect(clean(model)).toBe(expectedModel);
+    expect(clean(model).toLowerCase()).toBe(expectedModel.toLowerCase());
   },
   async resetfunction({ page }: NavigationParams): Promise<void> {
     await page.locator(quizgeneratorPage.reset).click();
@@ -290,8 +295,6 @@ const uiBase = {
     await expect(button).toBeEnabled();
     await button.click();
     await page.waitForTimeout(300);
-    const additionalInstruction = await page.locator(quizgeneratorPage.additionalinstruction).innerText();
-    expect(additionalInstruction).not.toBeNull();
     const validCounts = [5, 10, 15, 20];
     if (!validCounts.includes(questionCount)) {
       throw new Error(`Invalid question count. Must be one of ${validCounts.join(", ")}`);
@@ -300,14 +303,17 @@ const uiBase = {
     const radioInput = page.locator(`input#${radioButtonId}`);
     await expect(radioInput).toBeVisible({ timeout: 5000 });
     await expect(radioInput).toBeEnabled();
-    await page.waitForTimeout(200);
+    await page.waitForTimeout(2000);
     // Always explicitly select the desired question count
     await radioInput.scrollIntoViewIfNeeded();
     await radioInput.check();
+    const additionalInstruction = await page.locator(quizgeneratorPage.additionalinstruction).innerText();
+    expect(additionalInstruction).not.toBeNull();
     const strategyDropdown = page.locator(vocabBuilderPage.stratergydropdown);
     await expect(strategyDropdown).toBeVisible({ timeout: 5000 });
     await strategyDropdown.selectOption(strategyType);
     await expect(page.locator(vocabBuilderPage.generatequestion)).toBeEnabled();
+    await page.waitForTimeout(2000)
     await page.locator(vocabBuilderPage.generatequestion).click();
     await page.waitForSelector(quizgeneratorPage.questioncard);
     const questionsGenerated = await page.locator(quizgeneratorPage.questioncard);

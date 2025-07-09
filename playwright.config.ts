@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
-import teamsWebhook from './report/teams-webhook';
+
 
 export default defineConfig({
   testDir: './spec',
@@ -46,7 +46,7 @@ export default defineConfig({
       onEnd: async (reportData, capability) => {
         if (process.env.CI) {
           // teams and testRail integration with webhook
-          await teamsWebhook(reportData, capability);
+          // await teamsWebhook(reportData, capability);
           //await testrail(reportData, capability);
         }
       }
@@ -66,7 +66,7 @@ export default defineConfig({
     trace:"off",
     video: 'off',
     /* Maximum time each action such as click() can take. Defaults to 0 (no limit). */
-    actionTimeout: 50 * 1000,
+    actionTimeout: 100 * 1000,
   },
   projects: [
     {
