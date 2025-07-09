@@ -61,7 +61,7 @@ export default defineConfig({
   use: {
     baseURL: 'https://d20hisw26ibd3s.cloudfront.net/login',
     browserName: "chromium",
-    headless:false,
+    headless:true,
     screenshot:'on',
     trace:"off",
     video: 'off',
