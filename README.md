@@ -115,6 +115,18 @@ Record your test with [Playwright CodeGen](https://playwright.dev/docs/codegen)
 
 ## Running Tests
 
+Before running the tests, ensure required test data is properly set.
+
+Inside resource/uiTestData/uiTestData.ts, test credentials are defined like so:
+```bash
+const testData = {
+    createAccount: {
+        username: "username",
+        password: "password"
+    },
+};
+export default testData;
+```
 Execute the following command to run all tests:
 ```bash
 npm run automation

@@ -14,7 +14,7 @@ test('Validate Login', async ({ page, baseURL }) => {
 
 //Quiz Generator Section
 
-test('Quiz Generator-1', async ({ page, baseURL }) => {
+test.only('Quiz Generator-1', async ({ page, baseURL }) => {
     const url = baseURL + resource
     await testSpec.login({ page, url });
     const topicToSelect = 'Drama';
@@ -83,7 +83,7 @@ test('Quiz Generator-3', async ({ page, baseURL }) => {
     await testSpec.resetfunction({ page });
 })
 
-test.only('Quiz Generator-4', async ({ page, baseURL }) => {
+test('Quiz Generator-4', async ({ page, baseURL }) => {
     const url = baseURL + resource
     await testSpec.login({ page, url });
     const topicToSelect = 'Camouflage';
